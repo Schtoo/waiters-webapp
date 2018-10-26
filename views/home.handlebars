@@ -1,0 +1,40 @@
+<div class='container'>
+    <div class='row'>
+        <div class='twelve columns'>
+            <form action='/waiters/{{username}}' method="POST">
+            <h2>Waiters Availability App</h2>
+           <div class='row'>
+           {{#if messages.errors}}
+           <div class='twelve columns'>
+               {{messages.errors}}
+           </div>
+           {{/if}}
+            <hr>
+        </div>
+       </div>
+        <div class='row'>
+          <div class='twelve columns' id='daysOfWeek'>
+                <input type='checkbox' name='weekdays' value='Monday'>
+                <label>Monday</label>
+                <input type='checkbox' name='weekdays' value='Tuesday'>
+                <label>Tuesday</label>
+                <input type='checkbox' name='weekdays' value='Wednesday'>
+                <label>Wednesday</label>
+                <input type='checkbox' name='weekdays' value='Thursday'>
+                <label>Thursday</label>
+                <input type='checkbox' name='weekdays' value='Friday'>
+                <label>Friday</label>
+                <input type='checkbox' name='weekdays' value='Saturday'>
+                <label>Saturday</label>
+                <input type='checkbox' name='weekdays' value='Sunday'>
+                <label>Sunday</label>
+                <button type="submit" id='submit'>Submit</button>
+                </form>
+        </div>
+    </div>
+    <div class='row'>
+        <div class='twelve columns'>
+
+        </div>
+    </div>
+</div>
