@@ -48,9 +48,12 @@ app.use(session({
     saveUninitialized: true
 }));
 
+app.get('/', async function (req, res) {
+    res.render('home');
+});
+
 app.get('/waiters/:username', async function (req, res) {
     const username = req.params.username;
-
     res.render('home', {
         username
     });
@@ -58,15 +61,14 @@ app.get('/waiters/:username', async function (req, res) {
 
 app.post('/waiters/:username', async function (req, res, next){
     try{
-
         let username = req.params.username; 
         let weekdays = req.body.weekdays;
-       // console.log(weekdays);
-        let currentWaiter = waitersInstance.getWaiter(username);
-       let waiterShifts = waitersInstance.days();
+        let currentWaiter = await waitersInstance.getWaiter(username);
+        let assigning = await waitersInstance.assignShift(username, weekdays);
+        let waiterShifts = waitersInstance.days();
         res.render('home', {
             currentWaiter,
-            weekdays,
+            assigning,
             waiterShifts
         });
     } catch (error){
