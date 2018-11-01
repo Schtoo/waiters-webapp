@@ -65,24 +65,15 @@ app.post('/waiters/:username', async function (req, res, next){
         let weekdays = req.body.weekdays;
         let currentWaiter = await waitersInstance.getWaiter(username);
         let assigning = await waitersInstance.assignShift(username, weekdays);
-        let waiterShifts = waitersInstance.days();
+       // let waiterShifts = waitersInstance.days();
         res.render('home', {
             currentWaiter,
-            assigning,
-            waiterShifts
+            assigning
+        //    waiterShifts
         });
     } catch (error){
         next(error)
     }
-});
-
-app.post('/town', async function (req, res) {
-});
-
-app.post('/town', async function (req, res) {
-});
-
-app.get('/reseting', async function (req, res) {
 });
 
 let PORT = process.env.PORT || 3030;
