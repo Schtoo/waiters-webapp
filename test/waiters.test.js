@@ -9,28 +9,28 @@ const pool = new Pool ({
     connectionString
 });
 
-describe('Waiters', async function(){
-    beforeEach (async function(){
-        await pool.query('delete from waiters');
-     });
+describe('Waiters Web-Tests', async function(){
+    // beforeEach (async function(){
+    //     await pool.query('delete from waiters');
+
+    //  });
      it('should give you the waiter name entered', async function(){
         let currentWaiter = waitersAvailable(pool);
-        await currentWaiter.getWaiter('Greg');
+        //await currentWaiter.getWaiter('Greg');
         let waiters = await currentWaiter.getWaiter('Greg');
-        assert.deepEqual(waiters, [{waiter: 'Greg'}]);
+        console.log('waiter id ' + waiters)
+        let waiterName = await pool.query('select waiter from waiters where id = $1',[waiters])
+        console.log(waiterName.rows)
+        assert.deepEqual(waiterName.rows, [{waiter: 'Greg'}]);
      });
-    //  it('should give you the days a waiter will be working on', async function(){
-    //      let workDays = waitersAvailable(pool);
-    //      await workDays.days('Monday, Tuesday, Wednesday');
-    //      let daysWorking = await workDays.days('Monday, Tuesday, Wednesday');
-    //      assert.deepEqual(daysWorking, [{day: 'Monday, Tuesday, Wednesday'}]);
+   
+
+    //  it('should give you all the shifts', async function(){
+    //     let workDays = waitersAvailable(pool);
+    //     await workDays.getWaiter('Schtoo')
+    //     // await workDays.getWaiter('Schtoo')
+    //     let firstDay = await workDays.assignShift('Schtoo', ['Monday', 'Tuesday']);
+    //     firstDay = await workDays.assignShift('Tsoman', ['Tuesday', 'Wednesday']);
+    //    assert.equal(firstDay, [{waiter_id: 'Schtoo', day_id: 'Monday'}]);
     //  });
-     it('should give you all the shifts', async function(){
-        let workDays = waitersAvailable(pool);
-        await workDays.getWaiter('Schtoo')
-        // await workDays.getWaiter('Schtoo')
-        let shifts = await workDays.assignShift('Schtoo', ['Monday', 'Tuesday']);
-     // console.log(shifts);
-       assert.equal(shifts, [{waiter_id: 'Schtoo', day_id: 'Monday Tuesday'}]);
-     });
 });
