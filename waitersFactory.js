@@ -12,20 +12,49 @@ module.exports = function (pool) {
     //assigning shifts to waiters
     async function assignShift(names, listOfDays) {
         let waiter = await getWaiter(names);
-      //  console.log('name ' + waiter.id)
         for (let i = 0; i < listOfDays.length; i++) {
             let day = listOfDays[i];
             let dayId = await pool.query('SELECT id FROM daysofweek WHERE day=$1', [day]);
-          // console.log(dayId.rows[0].id);
             await pool.query('INSERT INTO shifts (day_id, waiter_id) values ($1, $2)', [dayId.rows[0].id, waiter.id]);
         }
-        let weekdays = await pool.query('SELECT DISTINCT waiters.waiter, daysofweek.day FROM waiters JOIN shifts ON waiters.id = shifts.waiter_id JOIN daysofweek ON shifts.day_id = daysofweek.id');
-        console.log(weekdays.rows);
-        return weekdays.rows;
+        let waiterDays = await pool.query(`SELECT DISTINCT waiters.waiter, daysofweek.day FROM waiters 
+         JOIN shifts ON waiters.id = shifts.waiter_id
+         JOIN daysofweek ON shifts.day_id = daysofweek.id WHERE waiter=$1`, [names]);
+        // console.log(waiterDays.rows);
+        return waiterDays.rows;
+    }
 
+    async function getshifts(name){
+        let waiterDays = await pool.query(`SELECT DISTINCT waiters.waiter, daysofweek.day FROM waiters 
+         JOIN shifts ON waiters.id = shifts.waiter_id
+         JOIN daysofweek ON shifts.day_id = daysofweek.id WHERE waiter=$1`, [name]);
+        //console.log(waiterDays.rows);
+        return waiterDays.rows;
+    }
+    async function getDays() {
+        let allDays = await pool.query('SELECT day FROM daysofweek');
+        return allDays.rows;
+    }
+    async function checkedDays(name){
+        let weekdays = await getDays();
+        console.log(weekdays);
+        let waiterShifts =await getshifts(name);
+        console.log(waiterShifts);
+        for (let i = 0; i < weekdays.length; i++) {
+            let dayElement = weekdays[i].day;
+            for (let getshifts of waiterShifts) {
+                if(dayElement === getshifts.day){
+                    weekdays[i].checked = "checked";
+                }
+            }
+        }
+        console.log(weekdays)
+        return weekdays;
     }
     return {
         getWaiter,
-        assignShift
+        assignShift,
+        getDays,
+        checkedDays
     }
 }
