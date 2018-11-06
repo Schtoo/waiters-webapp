@@ -2,26 +2,25 @@
     <div class='row'>
         <div class='twelve columns'>
             <form action='/waiters/{{username}}' method="POST">
-            <h2>Waiters Availability App</h2>
-           <div class='row'>
-           <div class='twelve columns'>
-               Hello {{username}}, select your shifts for the week
-           </div>
-        </div>
-            <hr>
-       </div>
+                <h2>Waiters Availability App</h2>
+                </div>
+                </div>
+                <div class='row'>
+                    {{#if message.info}}
+                    <div class='twelve columns' id="message">
+                        {{message.info}}
+                    </div>
+                    {{/if}}
+                </div>
+                <hr>
         <div class='row'>
-          <div class='twelve columns' id='daysOfWeek'>
-              {{#each getAllDays}}
-                <input type='checkbox'name='weekdays' value='{{day}}' {{checked}}>
+            <div class='twelve columns' id='daysOfWeek'>
+                {{#each getAllDays}}
+                <input type='checkbox' name='weekdays' value='{{day}}' {{checked}}>
                 <label>{{day}}</label>
                 {{/each}}
                 <button type="submit" id='submit'>Submit</button>
                 </form>
+            </div>
         </div>
-    </div>
-    <div class='row'>
-        <div class='twelve columns'>
-        </div>
-    </div>
 </div>

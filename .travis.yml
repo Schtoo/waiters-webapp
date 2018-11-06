@@ -1,1 +1,16 @@
-node_modules/
+language: node_js
+
+env:
+     - DB=postgresql://postgres@localhost:5432/waiter_availability
+     
+node_js:  
+   - "8.9.4"
+        
+before_script:
+  - psql -c 'create database waiter_availability;' -U postgres
+  - psql -U postgres -d waiter_availability -a -f table.sql 
+
+addons:
+    apt:
+    packages:
+    - postgresql-server-dev-9.2

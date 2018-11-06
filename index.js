@@ -54,7 +54,7 @@ app.get('/', async function (req, res) {
 
 app.get('/waiters/:username', async function (req, res) {
     const username = req.params.username;
-    let getAllDays = await waitersInstance.checkedDays(username)
+    let getAllDays = await waitersInstance.checkedDays(username);
     res.render('home', {
         username,
         getAllDays
@@ -67,9 +67,7 @@ app.post('/waiters/:username', async function (req, res, next){
         let weekdays = req.body.weekdays;
         let currentWaiter = await waitersInstance.getWaiter(username);
         let assigning = await waitersInstance.assignShift(username, weekdays);
-        //let getAllDays = await waitersInstance.getDays();
-        
-           res.redirect(`/waiters/${username}`)
+           res.redirect(`/waiters/${username}`);
     } catch (error){
         next(error)
     }

@@ -16,3 +16,7 @@
     color: #ffffff;
     background-color: #33C3F0;
 }
+#message {
+    font-weight: 10em;
+    color: rgb(41, 163, 14);
+}
