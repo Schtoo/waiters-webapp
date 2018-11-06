@@ -20,7 +20,6 @@ module.exports = function (pool) {
         let waiterDays = await pool.query(`SELECT DISTINCT waiters.waiter, daysofweek.day FROM waiters 
          JOIN shifts ON waiters.id = shifts.waiter_id
          JOIN daysofweek ON shifts.day_id = daysofweek.id WHERE waiter=$1`, [names]);
-        // console.log(waiterDays.rows);
         return waiterDays.rows;
     }
 
@@ -28,7 +27,6 @@ module.exports = function (pool) {
         let waiterDays = await pool.query(`SELECT DISTINCT waiters.waiter, daysofweek.day FROM waiters 
          JOIN shifts ON waiters.id = shifts.waiter_id
          JOIN daysofweek ON shifts.day_id = daysofweek.id WHERE waiter=$1`, [name]);
-        //console.log(waiterDays.rows);
         return waiterDays.rows;
     }
     async function getDays() {
@@ -37,9 +35,7 @@ module.exports = function (pool) {
     }
     async function checkedDays(name){
         let weekdays = await getDays();
-        console.log(weekdays);
-        let waiterShifts =await getshifts(name);
-        console.log(waiterShifts);
+        let waiterShifts = await getshifts(name);        
         for (let i = 0; i < weekdays.length; i++) {
             let dayElement = weekdays[i].day;
             for (let getshifts of waiterShifts) {
@@ -48,7 +44,7 @@ module.exports = function (pool) {
                 }
             }
         }
-        console.log(weekdays)
+        console.log(weekdays);
         return weekdays;
     }
     return {
