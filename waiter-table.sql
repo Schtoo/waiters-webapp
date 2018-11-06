@@ -24,11 +24,3 @@ INSERT INTO daysofweek (day) values('Thursday');
 INSERT INTO daysofweek (day) values('Friday');
 INSERT INTO daysofweek (day) values('Saturday');
 INSERT INTO daysofweek (day) values('Sunday');
-
--- INSERT INTO waiters (waiter) values('Vusi');
--- INSERT INTO waiters (waiter) values('Schtoo');
--- INSERT INTO waiters (waiter) values('Greg');
--- INSERT INTO waiters (waiter) values('Ace');
--- INSERT INTO waiters (waiter) values('Ayaz');
--- INSERT INTO waiters (waiter) values('Londi');
--- INSERT INTO waiters (waiter) values('Tsoman')
