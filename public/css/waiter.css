@@ -1,4 +1,4 @@
-#daysOfWeek input[type=checkbox] + label {
+#daysOfWeek input[type=checkbox]+label {
     display: inline-block;
     border-radius: 6px;
     background: #dddddd;
@@ -8,14 +8,25 @@
     line-height: 40px;
     text-align: center;
 }
-#daysOfWeek input[type=checkbox]:checked + label {
+
+#daysOfWeek input[type=checkbox]:checked+label {
     background: #2AD705;
     color: #ffffff;
 }
+
+input {
+    position: absolute;
+    left: -9999;   
+}
+
 #submit {
     color: #ffffff;
     background-color: #33C3F0;
+    width: 100px;
+    text-align: center;
+    border-radius: 6px;
 }
+
 #message {
     font-weight: 10em;
     color: rgb(41, 163, 14);

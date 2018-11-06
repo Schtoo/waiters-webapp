@@ -55,6 +55,11 @@ app.get('/', async function (req, res) {
 app.get('/waiters/:username', async function (req, res) {
     const username = req.params.username;
     let getAllDays = await waitersInstance.checkedDays(username);
+    if(getAllDays.status === 'welcome'){
+        req.flash('info', getAllDays.message);
+    } else if( getAllDays.status === 'update'){
+        req.flash('info', getAllDays.message);
+    }
     res.render('home', {
         username,
         getAllDays

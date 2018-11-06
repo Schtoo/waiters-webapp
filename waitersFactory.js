@@ -35,7 +35,18 @@ module.exports = function (pool) {
     }
     async function checkedDays(name){
         let weekdays = await getDays();
-        let waiterShifts = await getshifts(name);        
+        let waiterShifts = await getshifts(name);
+        if(waiterShifts.rowCount === 0){
+            return {
+                status: 'welcome',
+                message: 'Please select your shifts for the week'
+            }
+        } else if(waiterShifts > 0){
+            return {
+                status: 'update',
+                message: 'Below are your shifts for the week, you could update'
+            }
+        }
         for (let i = 0; i < weekdays.length; i++) {
             let dayElement = weekdays[i].day;
             for (let getshifts of waiterShifts) {
