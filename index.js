@@ -55,11 +55,6 @@ app.get('/', async function (req, res) {
 app.get('/waiters/:username', async function (req, res) {
     const username = req.params.username;
     let getAllDays = await waitersInstance.checkedDays(username);
-    if(getAllDays.status === 'welcome'){
-        req.flash('info', getAllDays.message);
-    } else if( getAllDays.status === 'update'){
-        req.flash('info', getAllDays.message);
-    }
     res.render('home', {
         username,
         getAllDays
@@ -70,8 +65,14 @@ app.post('/waiters/:username', async function (req, res, next){
     try{
         let username = req.params.username; 
         let weekdays = req.body.weekdays;
+       // let getSelectDays = await waitersInstance.daysBooked(username, weekdays);
         let currentWaiter = await waitersInstance.getWaiter(username);
         let assigning = await waitersInstance.assignShift(username, weekdays);
+        if(assigning.status === 'errors'){
+            req.flash('info', `${username} please select you shifts for the week`);
+        } else if (assigning.status === 'welcome'){
+            req.flash('info', `${username} please update your working shifts`);
+        }
            res.redirect(`/waiters/${username}`);
     } catch (error){
         next(error)
