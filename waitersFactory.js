@@ -6,29 +6,33 @@ module.exports = function (pool) {
             nameId = await pool.query('SELECT id FROM waiters WHERE waiter=$1', [names]);
         } else {
             nameId = await pool.query('SELECT id FROM waiters WHERE waiter=$1', [names]);
-        }
+        }        
         return nameId.rows[0];
     }
     //assigning shifts to waiters
-    async function assignShift(names, listOfDays) {
-        let waiter = await getWaiter(names);
+    async function assignShift(waiterName, listOfDays) {
+        // console.log(listOfDays)
+        let waiter = await getWaiter(waiterName);
+        // delete all the shifts for the current user
+        await pool.query('delete from shifts where waiter_id = $1',[waiter.id]);
+        //loop over the list of days 
         for (let i = 0; i < listOfDays.length; i++) {
             let day = listOfDays[i];
-            let dayId = await pool.query('SELECT id FROM daysofweek WHERE day=$1', [day]);
-            await pool.query('INSERT INTO shifts (day_id, waiter_id) values ($1, $2)', [dayId.rows[0].id, waiter.id]);
+            let dayIdResults = await pool.query('SELECT id FROM daysofweek WHERE day=$1', [day]);
+            console.log('Nazi ii-days -------');
+            let dayId = dayIdResults.rows[0].id
+            console.log(dayIdResults.rows[0].id);
+            await pool.query('INSERT INTO shifts (day_id, waiter_id) values ($1, $2)', [dayId, waiter.id]);
         }
-        let waiterDays = await pool.query(`SELECT DISTINCT waiters.waiter, daysofweek.day FROM waiters 
-         JOIN shifts ON waiters.id = shifts.waiter_id
-         JOIN daysofweek ON shifts.day_id = daysofweek.id WHERE waiter=$1`, [names]);
-        return waiterDays.rows;
     }
-
+    //getting shifts for the waiter
     async function getshifts(name){
         let waiterDays = await pool.query(`SELECT DISTINCT waiters.waiter, daysofweek.day FROM waiters 
          JOIN shifts ON waiters.id = shifts.waiter_id
          JOIN daysofweek ON shifts.day_id = daysofweek.id WHERE waiter=$1`, [name]);
         return waiterDays.rows;
     }
+    //getting all the days
     async function getDays() {
         let allDays = await pool.query('SELECT day FROM daysofweek');
         return allDays.rows;
@@ -36,15 +40,13 @@ module.exports = function (pool) {
     async function checkedDays(name){
         let weekdays = await getDays();
         let waiterShifts = await getshifts(name);
-        if(waiterShifts.rowCount === 0){
+        if(waiterShifts === ''){
             return {
-                status: 'welcome',
-                message: 'Please select your shifts for the week'
+                status: 'errors',
             }
-        } else if(waiterShifts > 0){
-            return {
-                status: 'update',
-                message: 'Below are your shifts for the week, you could update'
+        } else if (waiterShifts === weekdays.day){
+            return{
+                status: 'welcome'
             }
         }
         for (let i = 0; i < weekdays.length; i++) {
@@ -55,7 +57,6 @@ module.exports = function (pool) {
                 }
             }
         }
-        console.log(weekdays);
         return weekdays;
     }
     return {
@@ -63,5 +64,6 @@ module.exports = function (pool) {
         assignShift,
         getDays,
         checkedDays
+        // daysBooked
     }
 }
