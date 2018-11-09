@@ -31,3 +31,7 @@ input {
     font-weight: 10em;
     color: rgb(41, 163, 14);
 }
+
+body {
+    text-align: center;
+}
