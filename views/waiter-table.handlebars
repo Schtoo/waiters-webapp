@@ -1,0 +1,27 @@
+<h2>Waiter Shifts</h2>
+<div>
+    <form action="/admin" method="GET">
+        <div class='row'>
+            <div class="twelve columns">
+                <button class='homeBtn'>Home</button>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <div class='eight columns'>
+            <form action="/reset">
+                <button class='clear'>reset</button>
+                 </div>
+             </div>
+            </form>
+    <table>
+        <tr>
+            <th>{{day}}</th>
+        </tr>
+        {{#each getAllDays}}
+        <tr>
+            <td><a href="/waiters/{{username}}"></a>{{username}}</td>
+        </tr>
+        {{/each}}
+    </table>
+</div>

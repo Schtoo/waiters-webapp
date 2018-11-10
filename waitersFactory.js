@@ -37,18 +37,15 @@ module.exports = function (pool) {
         let allDays = await pool.query('SELECT day FROM daysofweek');
         return allDays.rows;
     }
+
+    //reset everything in database
+    async function resetDb(){
+        let resetDatabase = await pool.query('DELETE * FROM shifts');
+        return resetDatabase.rows; 
+    }
     async function checkedDays(name){
         let weekdays = await getDays();
         let waiterShifts = await getshifts(name);
-        if(waiterShifts === ''){
-            return {
-                status: 'errors',
-            }
-        } else if (waiterShifts === weekdays.day){
-            return{
-                status: 'welcome'
-            }
-        }
         for (let i = 0; i < weekdays.length; i++) {
             let dayElement = weekdays[i].day;
             for (let getshifts of waiterShifts) {
@@ -63,7 +60,7 @@ module.exports = function (pool) {
         getWaiter,
         assignShift,
         getDays,
-        checkedDays
-        // daysBooked
+        checkedDays,
+        resetDb
     }
 }

@@ -3,6 +3,7 @@
         <div class='twelve columns'>
             <form action='/waiters/{{username}}' method="POST">
                 <h2>Waiters Availability App</h2>
+     <a href="/admin"><button type="submit"><strong>admin</strong></button></a>
                 </div>
                 </div>
                 <div class='row'>
@@ -19,7 +20,7 @@
                 <input type='checkbox' name='weekdays' value='{{day}}' {{checked}}>
                 <label>{{day}}</label>
                 {{/each}}
-                <button type="submit" id='submit'>Submit</button>
+                <button type="submit" id='submit'><strong>submit</strong></button>
                 </form>
             </div>
         </div>

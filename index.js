@@ -61,6 +61,12 @@ app.get('/waiters/:username', async function (req, res) {
     });
 });
 
+app.post('/reset', async function (req, res){
+    let dbReset = await waitersInstance.resetDb();
+    res.render('/admin', {
+        dbReset
+    });
+});
 app.post('/waiters/:username', async function (req, res, next){
     try{
         let username = req.params.username; 
@@ -68,10 +74,10 @@ app.post('/waiters/:username', async function (req, res, next){
        // let getSelectDays = await waitersInstance.daysBooked(username, weekdays);
         let currentWaiter = await waitersInstance.getWaiter(username);
         let assigning = await waitersInstance.assignShift(username, weekdays);
-        if(assigning.status === 'errors'){
-            req.flash('info', `${username} please select you shifts for the week`);
-        } else if (assigning.status === 'welcome'){
-            req.flash('info', `${username} please update your working shifts`);
+        if(weekdays === ''){
+            req.flash('info', `${username} please select your shifts for the week`);
+        } else if (weekdays === weekdays.day){
+            req.flash('info', `${username} please update your shifts`);
         }
            res.redirect(`/waiters/${username}`);
     } catch (error){
