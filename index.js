@@ -70,16 +70,22 @@ app.post('/reset', async function (req, res){
 app.post('/waiters/:username', async function (req, res, next){
     try{
         let username = req.params.username; 
-        let weekdays = req.body.weekdays;
-       // let getSelectDays = await waitersInstance.daysBooked(username, weekdays);
-        let currentWaiter = await waitersInstance.getWaiter(username);
-        let assigning = await waitersInstance.assignShift(username, weekdays);
-        if(weekdays === ''){
-            req.flash('info', `${username} please select your shifts for the week`);
-        } else if (weekdays === weekdays.day){
-            req.flash('info', `${username} please update your shifts`);
+        username = username.charAt(0).toUpperCase() + username.slice(1).toLowerCase();
+        let weekdays = [];
+        if (req.body.weekdays) {
+            weekdays = Array.isArray(req.body.weekdays) ? req.body.weekdays : [req.body.weekdays];
         }
-           res.redirect(`/waiters/${username}`);
+        await waitersInstance.removingShifts();
+        if(weekdays === [undefined] || weekdays == '' || weekdays === []){
+            req.flash('info', `Welcome ${username} please select your shifts for the week`);
+        }
+       else {
+            await waitersInstance.getWaiter(username);
+            await waitersInstance.assignShift(username, weekdays);       
+            req.flash('info', `Thank you! Your submission is successful ${username}`);
+       }
+        res.redirect(`/waiters/${username}`);
+
     } catch (error){
         next(error)
     }
