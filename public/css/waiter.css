@@ -9,6 +9,10 @@
     text-align: center;
 }
 
+/* #checkId {
+    visibility: hidden;
+} */
+
 #daysOfWeek input[type=checkbox]:checked+label {
     background: #2AD705;
     color: #ffffff;
@@ -18,20 +22,27 @@ input {
     position: absolute;
     left: -9999;   
 }
+.admin {
+    background-color: #2AD705;
+    color: #ffffff;
+}
 
 #submit {
     color: #ffffff;
     background-color: #33C3F0;
-    width: 100px;
-    text-align: center;
+    width: 115px;
     border-radius: 6px;
+    text-align: inherit;
 }
 
 #message {
-    font-weight: 10em;
-    color: rgb(41, 163, 14);
+    font-weight: 20em;
+    color:#696969;
 }
 
+h6 {
+    text-align: center;
+}
 body {
     text-align: center;
 }

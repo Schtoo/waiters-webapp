@@ -3,27 +3,29 @@
         <div class='twelve columns'>
             <form action='/waiters/{{username}}' method="POST">
                 <h2>Waiters Availability App</h2>
-     <a href="/admin"><button type="submit"><strong>admin</strong></button></a>
+     <a href="/admin"><button type="submit" class='admin'><strong>Admin</strong></button></a>
                 </div>
                 </div>
                 <div class='row'>
-                    {{#if messages.info}}
-                    <div class='twelve columns' id="message">
-                        {{messages.info}}
+                    <div class='ten columns' id="message">
+                        <h6 class="info">
+                           <strong>
+                               {{messages.info}}
+                           </strong> 
+                        </h6>
                     </div>
-                    {{/if}}
                 </div>
                 <hr>
         <div class='row'>
             <div class='twelve columns' id='daysOfWeek'>
                 {{#each getAllDays}}
-                <input type='checkbox' name='weekdays' value='{{day}}' {{checked}}>
-                <label>{{day}}</label>
+                <input type='checkbox' id='checkId' name='weekdays' value='{{day}}' {{checked}}>
+                <label for='checkId'>{{day}}</label>
                 {{/each}}
-                <button type="submit" id='submit'><strong>submit</strong></button>
+                <button type="submit" id='submit'><strong>Submit</strong></button>
                 </form>
             </div>
         </div>
      <hr>
-        DONE @ Cwenga Mgqobozi
+     <strong>DONE @ Cwenga Mgqobozi</strong>   
 </div>

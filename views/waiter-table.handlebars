@@ -1,6 +1,6 @@
 <h2>Waiter Shifts</h2>
 <div>
-    <form action="/admin" method="GET">
+    <form action='/admin' method="GET">
         <div class='row'>
             <div class="twelve columns">
                 <button class='homeBtn'>Home</button>
@@ -16,12 +16,21 @@
             </form>
     <table>
         <tr>
-            <th>{{day}}</th>
+            {{#each daysofweek}}
+            <th>
+                {{day}}
+            </th>
+            {{/each}}
         </tr>
-        {{#each getAllDays}}
         <tr>
-            <td><a href="/waiters/{{username}}"></a>{{username}}</td>
+            {{#each waiters}}
+            <td>
+                <ul>
+                    {{#each waiter}}
+                    {{this}}
+                    {{/each}}
+                </ul>
+            </td>
         </tr>
-        {{/each}}
     </table>
 </div>
