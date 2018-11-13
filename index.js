@@ -97,8 +97,10 @@ app.post('/waiters/:username', async function (req, res, next){
 
 app.get('/admin', async function(req, res, next){
     try{
+        let waiter_shifts = await waitersInstance.getDays();
         let waiterShifts = await waitersInstance.adminCheck();        
     res.render('waiterDays', {
+        waiter_shifts,
         waiterShifts
     });
     } catch (error) {
