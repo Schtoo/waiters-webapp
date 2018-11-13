@@ -10,7 +10,7 @@ module.exports = function (pool) {
         return nameId.rows[0];
     }
 
-    async function removingShifts (){
+    async function removingShifts() {
         let shifts = await pool.query('DELETE FROM shifts');
         return shifts.rows;
     }
@@ -25,8 +25,23 @@ module.exports = function (pool) {
         for (let i = 0; i < listOfDays.length; i++) {
             let day = listOfDays[i];
             let dayIdResults = await pool.query('SELECT id FROM daysofweek WHERE day=$1', [day]);
-            await pool.query('INSERT INTO shifts (day_id, waiter_id) values ($1, $2)', [dayIdResults.rows[0].id, waiter.id]);
+            let dayId = dayIdResults.rows[0].id;
+            await pool.query('INSERT INTO shifts (day_id, waiter_id) values ($1, $2)', [dayId, waiter.id]);
         }
+    }
+
+    async function checkedDays(name) {
+        let weekdays = await getDays();
+        let waiterShifts = await getshifts(name);
+        for (let i = 0; i < weekdays.length; i++) {
+            let dayElement = weekdays[i].day;
+            for (let getshifts of waiterShifts) {
+                if (dayElement === getshifts.day) {
+                    weekdays[i].checked = "checked";
+                }
+            }
+        }
+        return weekdays;
     }
     //getting shifts for the waiter
     async function getshifts(name) {
@@ -46,29 +61,10 @@ module.exports = function (pool) {
         let resetDatabase = await pool.query('DELETE FROM shifts');
         return resetDatabase.rows;
     }
-    async function checkedDays(name) {
-        let weekdays = await getDays();
-        let waiterShifts = await getshifts(name);
-        for (let i = 0; i < weekdays.length; i++) {
-            let dayElement = weekdays[i].day;
-            for (let getshifts of waiterShifts) {
-                if (dayElement === getshifts.day) {
-                    weekdays[i].checked = "checked";
-                }
-            }
-        }
-        return weekdays;
-    }
-
-    async function adminCheck (){
-        let getWeekdays = await getshifts();
-        console.log(getWeekdays);
-        for (let weekdays of getWeekdays) {
-            let getAllDays = await pool.query(`SELECT * FROM daysofweek left join shifts on shift.day_id = day.id
-            left join waiters on waiter.id = waiter_id`, [weekdays.id]);
-            console.log(getAllDays);
-            return getAllDays;
-        }
+    async function adminCheck() {
+        let getAllDays = await pool.query(`SELECT * from daysofweek left join shifts on shifts.day_id=daysofweek.id
+            left join waiters on waiters.id=waiter_id`);
+        return getAllDays.rows;
     }
     return {
         getWaiter,
