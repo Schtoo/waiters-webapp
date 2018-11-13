@@ -61,11 +61,15 @@ app.get('/waiters/:username', async function (req, res) {
     });
 });
 
-app.post('/reset', async function (req, res){
-    let dbReset = await waitersInstance.resetDb();
-    res.render('/admin', {
-        dbReset
-    });
+app.get('/reset', async function (req, res, next){
+    try{
+        let dbReset = await waitersInstance.resetDb();
+        res.render('/waiterDays', {
+            dbReset
+        });
+    } catch (error) {
+        next (error)
+    }
 });
 app.post('/waiters/:username', async function (req, res, next){
     try{
@@ -90,6 +94,17 @@ app.post('/waiters/:username', async function (req, res, next){
         next(error)
     }
 });
+
+app.get('/admin', async function(req, res, next){
+    try{
+        let waiterShifts = await waitersInstance.adminCheck();        
+    res.render('waiterDays', {
+        waiterShifts
+    });
+    } catch (error) {
+        next (error)
+    }
+})
 
 let PORT = process.env.PORT || 3030;
 

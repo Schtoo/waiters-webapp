@@ -43,7 +43,7 @@ module.exports = function (pool) {
 
     //reset everything in database
     async function resetDb() {
-        let resetDatabase = await pool.query('DELETE * FROM shifts');
+        let resetDatabase = await pool.query('DELETE FROM shifts');
         return resetDatabase.rows;
     }
     async function checkedDays(name) {
@@ -59,12 +59,23 @@ module.exports = function (pool) {
         }
         return weekdays;
     }
+
+    async function adminCheck (){
+        let getWeekdays = await getshifts();
+        for (let weekdays of getWeekdays) {
+            let getAllDays = await pool.query(`SELECT * FROM daysofweek left join shifts on shift.day_id = day.id
+            left join waiters on waiter.id = waiter_id`, [weekdays.id]);
+            console.log(getAllDays);
+            return getAllDays;
+        }
+    }
     return {
         getWaiter,
         assignShift,
         getDays,
         checkedDays,
         resetDb,
-        removingShifts
+        removingShifts,
+        adminCheck
     }
 }

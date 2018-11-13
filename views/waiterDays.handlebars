@@ -1,19 +1,19 @@
 <h2>Waiter Shifts</h2>
 <div>
+    <div class="twelve columns">
+        <a href="/"><button class='homeBtn'>Home</button></a>
+    </div>
     <form action='/admin' method="GET">
         <div class='row'>
-            <div class="twelve columns">
-                <button class='homeBtn'>Home</button>
-            </div>
         </div>
     </form>
     <div class="row">
-        <div class='eight columns'>
+        <div class='twelve columns'>
             <form action="/reset">
                 <button class='clear'>reset</button>
-                 </div>
-             </div>
-            </form>
+        </div>
+    </div>
+    </form>
     <table>
         <tr>
             {{#each daysofweek}}
@@ -31,6 +31,7 @@
                     {{/each}}
                 </ul>
             </td>
+            {{/each}}
         </tr>
     </table>
 </div>
