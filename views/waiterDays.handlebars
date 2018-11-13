@@ -10,28 +10,26 @@
     <div class="row">
         <div class='twelve columns'>
             <form action="/reset">
-                <button class='clear'>reset</button>
+            <a href="/reset"><button class='clear'>reset</button></a>
         </div>
     </div>
     </form>
-    <table>
-        <tr>
-            {{#each waiter_shifts}}
-            <th>
-                {{this.day}}
-            </th>
-            {{/each}}
-        </tr>
-        <tr>
-            {{#each username}}
-            <td>
-                <ul>
-                    {{#each username}}
-                    {{this}}
-                    {{/each}}
-                </ul>
-            </td>
-            {{/each}}
-        </tr>
-    </table>
+<table>
+    <tr>
+        <th>
+        {{#each getWaiterShift}}
+            {{day}}
+        {{/each}}
+        </th>
+    </tr>
+    <tr>
+        <td>
+            <ul>
+                {{#each waiterShifts}}
+                {{this.waiter}}
+                {{/each}}
+            </ul>
+        </td>
+    </tr>
+</table>
 </div>
