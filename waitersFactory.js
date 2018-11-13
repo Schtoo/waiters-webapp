@@ -37,7 +37,7 @@ module.exports = function (pool) {
     }
     //getting all the days
     async function getDays() {
-        let allDays = await pool.query('SELECT day FROM daysofweek');
+        let allDays = await pool.query('SELECT id, day FROM daysofweek');
         return allDays.rows;
     }
 
@@ -62,6 +62,7 @@ module.exports = function (pool) {
 
     async function adminCheck (){
         let getWeekdays = await getshifts();
+        console.log(getWeekdays);
         for (let weekdays of getWeekdays) {
             let getAllDays = await pool.query(`SELECT * FROM daysofweek left join shifts on shift.day_id = day.id
             left join waiters on waiter.id = waiter_id`, [weekdays.id]);
