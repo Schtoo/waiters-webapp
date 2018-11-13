@@ -9,9 +9,9 @@
     text-align: center;
 }
 
-/* #checkId {
+.checkId {
     visibility: hidden;
-} */
+}
 
 #daysOfWeek input[type=checkbox]:checked+label {
     background: #2AD705;
@@ -30,7 +30,7 @@ input {
 #submit {
     color: #ffffff;
     background-color: #33C3F0;
-    width: 115px;
+    width: 105px;
     border-radius: 6px;
     text-align: inherit;
 }
@@ -46,3 +46,8 @@ h6 {
 body {
     text-align: center;
 }
+.container {
+    text-align: center;
+    padding: 2em;
+}
+
