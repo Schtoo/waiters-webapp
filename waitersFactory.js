@@ -10,9 +10,9 @@ module.exports = function (pool) {
         return nameId.rows[0];
     }
 
-    async function removingShifts() {
-        let shifts = await pool.query('DELETE FROM shifts');
-        return shifts.rows;
+    async function removingShifts(days) {
+        let shifts = await pool.query('DELETE FROM shifts WHERE day_id=$1', [days.id]);
+        return shifts;
     }
 
     //assigning shifts to waiters
@@ -62,9 +62,27 @@ module.exports = function (pool) {
         return resetDatabase.rows;
     }
     async function adminCheck() {
-        let getAllDays = await pool.query(`SELECT * from daysofweek left join shifts on shifts.day_id=daysofweek.id
+        let getAllDays = await pool.query(`SELECT * from daysofweek  
+            left join shifts on shifts.day_id=daysofweek.id
             left join waiters on waiters.id=waiter_id`);
-        return getAllDays.rows;
+        let days = getAllDays.rows;
+
+        let waitersPerDay = [];
+
+        days.forEach(waiterDay => {
+            // does the current day exists ?
+            let currentDay = waitersPerDay.find( perDay => perDay.day === waiterDay.day );
+            // if the day is not yet in the waitersPerDay
+            if (!currentDay) {
+                currentDay = {
+                    day : waiterDay.day,
+                    waiters : []
+                }
+                waitersPerDay.push(currentDay);
+            }
+            currentDay.waiters.push(waiterDay.waiter);
+        });
+        return waitersPerDay;
     }
     return {
         getWaiter,

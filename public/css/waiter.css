@@ -25,6 +25,7 @@ input {
 .admin {
     background-color: #2AD705;
     color: #ffffff;
+    width: 110px;
 }
 
 #submit {
@@ -48,5 +49,25 @@ body {
 }
 .container {
     text-align: center;
-    padding: 2em;
+}
+.clear {
+    background-color: #9A0E2A;
+    color: #ffffff;
+    width: 110px;
+}
+.homeBtn {
+    background-color: #33C3F0;
+    color: #ffffff;
+}
+#head {
+    background-color: aqua;
+    padding: 5px;
+}
+h2 {
+    background-color: aqua;
+    padding: 5px;
+}
+table {
+    margin: 5px;
+    padding-left: 10px;
 }

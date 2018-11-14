@@ -1,5 +1,5 @@
-<h2>Waiter Shifts</h2>
 <div class='container'>
+<h2>Waiter Shifts</h2>
     <div class="twelve columns">
         <a href="/"><button class='homeBtn'>Home</button></a>
     </div>
@@ -10,26 +10,28 @@
     <div class="row">
         <div class='twelve columns'>
             <form action="/reset">
-            <a href="/reset"><button class='clear'>reset</button></a>
+                <a href="/reset"><button class='clear'>reset</button></a>
         </div>
     </div>
     </form>
-<table>
-    <tr>
-        <th>
-        {{#each getWaiterShift}}
-            {{day}}
-        {{/each}}
-        </th>
-    </tr>
-    <tr>
-        <td>
-            <ul>
-                {{#each waiterShifts}}
-                {{this.waiter}}
-                {{/each}}
-            </ul>
-        </td>
-    </tr>
-</table>
+    <table>
+        <tr>
+            {{#each waiterShifts}}
+            <th>
+                {{day}}
+            </th>
+            {{/each}}
+        </tr>
+        <tr>
+            {{#each waiterShifts}}
+            <td>
+                <ul>
+                    {{#each waiters}}
+                    <li>{{this}}</li>
+                    {{/each}}
+                </ul>
+            </td>
+            {{/each}}
+        </tr>
+    </table>
 </div>
