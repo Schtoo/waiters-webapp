@@ -41,8 +41,11 @@ input {
     color:#696969;
 }
 
-h6 {
+h6, h2 {
     text-align: center;
+}
+li {
+    list-style-type: none;
 }
 body {
     text-align: center;
@@ -68,6 +71,6 @@ h2 {
     padding: 5px;
 }
 table {
-    margin: 5px;
-    padding-left: 10px;
+    margin-right: 0px;
+    margin-left: 20px;
 }
