@@ -8,6 +8,11 @@
                 <div class='row'>
      <a href="/admin"><button type="submit" class='admin'><strong>Admin</strong></button></a>
             <form action='/waiters/{{username}}' method="POST">
+            <div class='row'>
+                <div class='twelve columns' id='wholeWeek'>
+                    <label for="weeklyDays">{{day}}</label>
+                </div>
+            </div>
                     <div class='twelve columns' id="message">
                         <h6 class="info">
                            <strong>

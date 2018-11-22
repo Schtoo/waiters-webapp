@@ -31,9 +31,9 @@ input {
 #submit {
     color: #ffffff;
     background-color: #33C3F0;
-    width: 105px;
+    width: 112px;
     border-radius: 6px;
-    text-align: inherit;
+    text-align: center;
 }
 
 #message {
@@ -71,6 +71,16 @@ h2 {
     padding: 5px;
 }
 table {
+    width: 55em;
     margin-right: 0px;
     margin-left: 20px;
+}
+th {
+    border-radius: 6px;
+    background: #dddddd;
+    height: 40px;
+    width: 90px;
+    margin-right: 10px;
+    line-height: 40px;
+    text-align: center;
 }

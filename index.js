@@ -49,7 +49,10 @@ app.use(session({
 }));
 
 app.get('/', async function (req, res) {
-    res.render('home');
+    let getWaiterShift = await waitersInstance.getDays();
+    res.render('home', {
+        getWaiterShift
+    });
 });
 
 app.get('/waiters/:username', async function (req, res) {
@@ -72,7 +75,7 @@ app.get('/reset', async function (req, res, next) {
 
 app.post('/waiters/:username', async function (req, res, next) {
     try {
-        let username = req.params.username;
+        let {username} = req.params;
         username = username.charAt(0).toUpperCase() + username.slice(1).toLowerCase();
         let weekdays = [];
         if (req.body.weekdays) {
@@ -87,7 +90,6 @@ app.post('/waiters/:username', async function (req, res, next) {
             req.flash('info', `Thank you! Your submission is successful ${username}`);
         }
         res.redirect(`/waiters/${username}`);
-
     } catch (error) {
         next(error)
     }
