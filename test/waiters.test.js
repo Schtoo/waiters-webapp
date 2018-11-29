@@ -15,12 +15,10 @@ describe('Waiters Web-Tests', async function(){
    //   });
      it('should give you the waiter name entered', async function(){
         let currentWaiter = waitersAvailable(pool);
-        //await currentWaiter.getWaiter('Greg');
         let waiters = await currentWaiter.getWaiter('Greg');
-        console.log('waiter id ' + waiters)
-        let waiterName = await pool.query('select waiter from waiters where id = $1',[waiters])
-        console.log(waiterName.rows)
-        assert.equal(waiterName.rows, [{id: '36'}]);
+       let waiterName = await pool.query('select id from waiters where id = $1',[waiters]);
+       console.log(waiterName);
+        assert.equal(waiterName, {id: 36});
      });
    //   beforeEach (async function(){
    //      await pool.query('delete from waiters');
