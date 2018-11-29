@@ -28,7 +28,11 @@
                 <input  class="checkId" type='checkbox' id='checkId_{{id}}' name='weekdays' value='{{day}}' {{checked}}>
                 <label for='checkId_{{id}}'>{{day}}</label>
                 {{/each}}
+                
+                {{#if getAllDays}}
                 <button type="submit" id='submit'><strong>Submit</strong></button>
+                {{/if}}
+
                 </form>
             </div>
         </div>
